@@ -17,13 +17,21 @@ class Board extends Component {
           id: state.notes.length + 1,
           text: 'Hola',
           position: {
-            x,
-            y,
+            x: x - 90,
+            y: y - 100,
           },
         },
       ],
     }));
   }
+
+  onUpdateNote = (id, body) => {
+    const { notes } = this.state;
+    const newNotes = notes.map(note => (
+      note.id === id ? { ...note, ...body } : note
+    ));
+    this.setState({ notes: newNotes });
+  };
 
   render() {
     const { notes } = this.state;
@@ -31,7 +39,13 @@ class Board extends Component {
       <div className="Board" onDoubleClick={this.onAddNote}>
         {
           notes.map(note => (
-            <Note id={note.id} text={note.text} position={note.position} key={note.id} />
+            <Note
+              id={note.id}
+              text={note.text}
+              position={note.position}
+              key={note.id}
+              onUpdateNote={this.onUpdateNote}
+            />
           ))
         }
       </div>

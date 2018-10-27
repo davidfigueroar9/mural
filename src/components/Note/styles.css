@@ -1,11 +1,34 @@
-.Board {
-  height: 100vh;
-  background-color: #FBFBFB;
+.Note {
+  width: 180px;
+  display: flex;
+  padding: 10px;
+  font-size: 16px;
+  position: absolute;
+  height: 200px;
+  background-color: white;
+  border: 1px solid #ececec;
+  border-color: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  user-select: none;
 }
 
-.Note {
-  width: 100px;
-  height: 150px;
-  background-color: white;
-  border: 1px solid #c4c4c4;
+.Note p {
+  padding: 0px;
+  margin: 0px;
+}
+
+.Note textarea {
+  padding: 0px;
+  margin: 0px;
+  display: flex;
+  color: #282C34;
+  flex: 1;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  background-color: rgba(0, 0, 0, 0.0);
+  border: none;
+  overflow: auto;
+  outline: none;
+  box-shadow: none;
+  resize: none; /*remove the resize handle on the bottom right*/
 }
