@@ -14,6 +14,7 @@ class Note extends PureComponent {
     onUpdateNote: PropTypes.func.isRequired,
     id: PropTypes.number.isRequired,
     selected: PropTypes.bool.isRequired,
+    onSelectedNote: PropTypes.func.isRequired,
   };
 
   state = {
@@ -35,8 +36,8 @@ class Note extends PureComponent {
 
   onSelectedNote = (event) => {
     event.stopPropagation();
-    const { id, onUpdateNote } = this.props;
-    onUpdateNote(id, { selected: true });
+    const { id, onSelectedNote } = this.props;
+    onSelectedNote(id);
   }
 
   render() {
@@ -47,7 +48,19 @@ class Note extends PureComponent {
       transform: `translate(${position.x}px, ${position.y}px)`,
     };
 
+    const contentNote = !editMode ? (
+      <p>{ text }</p>
+    ) : (
+      <textarea
+        autoFocus
+        onBlur={this.toogleEditMode}
+        onChange={this.onChangeText}
+        defaultValue={text}
+      />
+    );
+
     return (
+
       <div className="Note" style={styles}>
         <div className={`select ${selected ? 'selected' : ''}`}>
           <div
@@ -56,11 +69,7 @@ class Note extends PureComponent {
             className="content"
             onDoubleClick={this.toogleEditMode}
           >
-            { !editMode ? (
-              <p>{ text }</p>
-            ) : (
-              <textarea autoFocus onChange={this.onChangeText} defaultValue={text} />
-            )}
+            { contentNote }
           </div>
         </div>
       </div>
