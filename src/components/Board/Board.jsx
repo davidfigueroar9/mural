@@ -8,13 +8,18 @@ class Board extends Component {
   }
 
   onAddNote = (event) => {
-    console.log(event);
+    const x = event.clientX;
+    const y = event.clientY;
     this.setState(state => ({
       notes: [
         ...state.notes,
         {
           id: state.notes.length + 1,
           text: 'Hola',
+          position: {
+            x,
+            y,
+          },
         },
       ],
     }));
@@ -25,7 +30,9 @@ class Board extends Component {
     return (
       <div className="Board" onDoubleClick={this.onAddNote}>
         {
-          notes.map(note => <Note key={note.id} />)
+          notes.map(note => (
+            <Note id={note.id} text={note.text} position={note.position} key={note.id} />
+          ))
         }
       </div>
     );
