@@ -9,6 +9,10 @@ class Board extends Component {
 
   multiple = false;
 
+  mousePosition = {};
+
+  clipboard = [];
+
   onAddNote = (event) => {
     const x = event.clientX;
     const y = event.clientY;
@@ -26,6 +30,26 @@ class Board extends Component {
       notes: [
         ...state.notes,
         newNote,
+      ],
+    }));
+  }
+
+  onPasteNotes = () => {
+    const { x, y } = this.mousePosition;
+    const { notes } = this.state;
+    const newNotes = this.clipboard.map((note, index) => ({
+      ...note,
+      id: notes.length + 1 + index,
+      selected: false,
+      position: {
+        x: x - 90,
+        y: y - 100,
+      },
+    }));
+    this.setState(state => ({
+      notes: [
+        ...state.notes,
+        ...newNotes,
       ],
     }));
   }
@@ -54,8 +78,18 @@ class Board extends Component {
     this.setState({ notes: newNotes });
   };
 
-  onCheckMultiple = (event) => {
-    this.multiple = event.shiftKey || event.keyCode === 93 || event.keyCode === 91;
+  onKeyDown = (event) => {
+    this.multiple = event.shiftKey || event.metaKey;
+    if ((event.ctrlKey && event.keyCode === 67) || (event.metaKey && event.keyCode === 67)) {
+      const { notes } = this.state;
+      this.clipboard = notes.filter(note => note.selected);
+    } else if ((event.ctrlKey && event.keyCode === 86) || (event.metaKey && event.keyCode === 86)) {
+      this.onPasteNotes();
+    }
+  }
+
+  onMouseMove = (event) => {
+    this.mousePosition = { x: event.pageX, y: event.pageY };
   }
 
   onKeyUp = () => {
@@ -80,12 +114,13 @@ class Board extends Component {
     return (
       <div
         tabIndex="0"
-        onKeyDown={this.onCheckMultiple}
+        onKeyDown={this.onKeyDown}
         onKeyUp={this.onKeyUp}
         role="button"
         className="Board"
         onDoubleClick={this.onAddNote}
         onClick={this.unSelectAll}
+        onMouseMove={this.onMouseMove}
       >
         { renderNotes }
       </div>
