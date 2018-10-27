@@ -1,9 +1,12 @@
 .Note {
+  position: absolute;
+}
+
+.Note .content {
   width: 180px;
   display: flex;
   padding: 10px;
   font-size: 16px;
-  position: absolute;
   height: 200px;
   background-color: white;
   border: 1px solid #ececec;
@@ -31,4 +34,14 @@
   outline: none;
   box-shadow: none;
   resize: none; /*remove the resize handle on the bottom right*/
+}
+
+.Note .select {
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.0);
+  border-radius: 5px;
+}
+
+.Note .select.selected {
+  background: rgba(0, 0, 0, .1);
 }

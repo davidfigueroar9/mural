@@ -15,7 +15,8 @@ class Board extends Component {
         ...state.notes,
         {
           id: state.notes.length + 1,
-          text: 'Hola',
+          text: '',
+          selected: false,
           position: {
             x: x - 90,
             y: y - 100,
@@ -23,6 +24,12 @@ class Board extends Component {
         },
       ],
     }));
+  }
+
+  unSelectAll = () => {
+    const { notes } = this.state;
+    const newNotes = notes.map(note => ({ ...note, selected: false }));
+    this.setState({ notes: newNotes });
   }
 
   onUpdateNote = (id, body) => {
@@ -36,7 +43,7 @@ class Board extends Component {
   render() {
     const { notes } = this.state;
     return (
-      <div className="Board" onDoubleClick={this.onAddNote}>
+      <div role="presentation" className="Board" onDoubleClick={this.onAddNote} onClick={this.unSelectAll}>
         {
           notes.map(note => (
             <Note
@@ -44,6 +51,7 @@ class Board extends Component {
               text={note.text}
               position={note.position}
               key={note.id}
+              selected={note.selected}
               onUpdateNote={this.onUpdateNote}
             />
           ))

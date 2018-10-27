@@ -13,6 +13,7 @@ class Note extends PureComponent {
     text: PropTypes.string.isRequired,
     onUpdateNote: PropTypes.func.isRequired,
     id: PropTypes.number.isRequired,
+    selected: PropTypes.bool.isRequired,
   };
 
   state = {
@@ -32,8 +33,14 @@ class Note extends PureComponent {
     onUpdateNote(id, { text: newText });
   }
 
+  onSelectedNote = (event) => {
+    event.stopPropagation();
+    const { id, onUpdateNote } = this.props;
+    onUpdateNote(id, { selected: true });
+  }
+
   render() {
-    const { position, text } = this.props;
+    const { position, text, selected } = this.props;
     const { editMode } = this.state;
 
     const styles = {
@@ -41,12 +48,21 @@ class Note extends PureComponent {
     };
 
     return (
-      <div style={styles} className="Note" onDoubleClick={this.toogleEditMode}>
-        { !editMode ? (
-          <p>{ text }</p>
-        ) : (
-          <textarea autoFocus onChange={this.onChangeText} defaultValue={text} />
-        )}
+      <div className="Note" style={styles}>
+        <div className={`select ${selected ? 'selected' : ''}`}>
+          <div
+            role="presentation"
+            onClick={this.onSelectedNote}
+            className="content"
+            onDoubleClick={this.toogleEditMode}
+          >
+            { !editMode ? (
+              <p>{ text }</p>
+            ) : (
+              <textarea autoFocus onChange={this.onChangeText} defaultValue={text} />
+            )}
+          </div>
+        </div>
       </div>
     );
   }
