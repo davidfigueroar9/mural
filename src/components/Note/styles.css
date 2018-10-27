@@ -3,12 +3,12 @@
 }
 
 .Note .content {
-  width: 180px;
+  width: 140px;
   display: flex;
   padding: 10px;
-  font-size: 16px;
-  height: 200px;
-  background-color: white;
+  font-size: 14px;
+  height: 160px;
+  background-color: #45A2FF;
   border: 1px solid #ececec;
   border-color: rgba(0, 0, 0, 0.1);
   border-radius: 5px;
@@ -18,16 +18,17 @@
 .Note p {
   padding: 0px;
   margin: 0px;
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .Note textarea {
   padding: 0px;
   margin: 0px;
   display: flex;
-  color: #282C34;
+  color: rgba(0, 0, 0, 0.8);
   flex: 1;
   font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   background-color: rgba(0, 0, 0, 0.0);
   border: none;
   overflow: auto;

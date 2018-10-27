@@ -1,0 +1,39 @@
+.Header {
+  height: 32px;
+  background: #45A2FF;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 4px 4px 10px;
+  color: #FFF;
+  user-select: none;
+}
+
+.Header img {
+  height: 25px;
+}
+.Header .toolbar {
+  display: flex;
+  position: absolute;
+  right: 4px;
+}
+.Header .btn {
+  height: 32px;
+  width: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, .5);
+  margin-right: 4px;
+}
+.Header .btn:hover {
+
+  background-color: rgba(255, 255, 255, .6);
+
+}
+
+.Header .btn .material-icons {
+  font-size: 20px;
+}

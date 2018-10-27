@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Note from '../Note';
+import Header from '../Header';
 import './styles.css';
 
 class Board extends Component {
@@ -122,6 +123,7 @@ class Board extends Component {
         onClick={this.unSelectAll}
         onMouseMove={this.onMouseMove}
       >
+        <Header />
         { renderNotes }
       </div>
     );
