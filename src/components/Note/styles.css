@@ -8,10 +8,10 @@
   padding: 10px;
   font-size: 14px;
   height: 160px;
-  background-color: #45A2FF;
+  background-color: #FFF;
   border: 1px solid #ececec;
   border-color: rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
+  border-radius: 3px;
   user-select: none;
 }
 
@@ -44,5 +44,5 @@
 }
 
 .Note .select.selected {
-  background: rgba(0, 0, 0, .1);
+  background: rgba(0, 0, 0, .05);
 }

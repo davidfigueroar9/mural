@@ -22,6 +22,7 @@ class Board extends Component {
       id: notes.length + 1,
       text: '',
       selected: false,
+      color: '#FFFFFF',
       position: {
         x: x - 90,
         y: y - 100,
@@ -97,6 +98,38 @@ class Board extends Component {
     this.multiple = false;
   }
 
+  onDelete = () => {
+    const { notes } = this.state;
+    this.setState({ notes: notes.filter(note => !note.selected) });
+  }
+
+  onChangeColor = (color) => {
+    const { notes } = this.state;
+    const newNotes = notes.map(note => (
+      note.selected
+        ? { ...note, color }
+        : { ...note }
+    ));
+    this.setState({ notes: newNotes });
+  }
+
+  onOrder = () => {
+    const { notes } = this.state;
+
+    this.setState({
+      notes: notes.map((note, index) => {
+        const position = {
+          y: note.selected ? 10 : note.position.y,
+          x: note.selected ? 10 + (180 * index) : note.position.x,
+        };
+        return ({
+          ...note,
+          position,
+        });
+      }),
+    });
+  }
+
   render() {
     const { notes } = this.state;
 
@@ -109,6 +142,7 @@ class Board extends Component {
         selected={note.selected}
         onUpdateNote={this.onUpdateNote}
         onSelectedNote={this.onSelectedNote}
+        color={note.color}
       />
     ));
 
@@ -123,7 +157,12 @@ class Board extends Component {
         onClick={this.unSelectAll}
         onMouseMove={this.onMouseMove}
       >
-        <Header />
+        <Header
+          onDelete={this.onDelete}
+          onOrder={this.onOrder}
+          selected={notes.filter(note => note.selected).length}
+          onChangeColor={this.onChangeColor}
+        />
         { renderNotes }
       </div>
     );

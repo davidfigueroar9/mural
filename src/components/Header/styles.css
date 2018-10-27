@@ -25,12 +25,19 @@
   justify-content: center;
   align-items: center;
   border-radius: 3px;
-  background-color: rgba(255, 255, 255, .5);
+  background-color: rgba(255, 255, 255, .4);
+  transition: background-color ease .3s;
   margin-right: 4px;
 }
 .Header .btn:hover {
 
   background-color: rgba(255, 255, 255, .6);
+
+}
+
+.Header .btn:active {
+
+  background-color: rgba(255, 255, 255, .2);
 
 }
 

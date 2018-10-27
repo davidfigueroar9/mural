@@ -1,0 +1,27 @@
+.ButtonHeader {
+  height: 32px;
+  width: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, .4);
+  transition: background-color ease .3s;
+  margin-right: 4px;
+  position: relative;
+}
+.ButtonHeader:hover {
+
+  background-color: rgba(255, 255, 255, .6);
+
+}
+
+.ButtonHeader:active {
+
+  background-color: rgba(255, 255, 255, .2);
+
+}
+
+.ButtonHeader .material-icons {
+  font-size: 20px;
+}
