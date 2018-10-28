@@ -4,10 +4,17 @@ import ButtonHeader from '../ButtonHeader';
 import ColorPicker from '../ColorPicker';
 import Instructions from '../Instructions';
 import logo from '../../images/logo.svg';
+import NotesContext from '../../context';
 import './styles.css';
 
-
 class Header extends PureComponent {
+  static propTypes = {
+    onDelete: PropTypes.func.isRequired,
+    onOrder: PropTypes.func.isRequired,
+    selected: PropTypes.number.isRequired,
+    onChangeColor: PropTypes.func.isRequired,
+  };
+
   state = {
     openColorPicker: false,
     openInstructions: false,
@@ -76,12 +83,25 @@ class Header extends PureComponent {
   }
 }
 
+const HeaderWithContext = props => (
+  <NotesContext.Consumer>
+    {({
+      onChangeColor,
+      selected,
+      onDelete,
+      onOrder,
+    }) => (
+      <Header
+        {...props}
+        onChangeColor={onChangeColor}
+        selected={selected}
+        onDelete={onDelete}
+        onOrder={onOrder}
+      />
+    )}
+  </NotesContext.Consumer>
+);
 
-Header.propTypes = {
-  onDelete: PropTypes.func.isRequired,
-  onOrder: PropTypes.func.isRequired,
-  selected: PropTypes.number.isRequired,
-  onChangeColor: PropTypes.func.isRequired,
-};
+export { Header };
 
-export default Header;
+export default HeaderWithContext;

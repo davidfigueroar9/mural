@@ -2,7 +2,23 @@
 
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import NotesContext from '../../context';
 import './styles.css';
+
+const NoteWithContext = props => (
+  <NotesContext.Consumer>
+    {({ getNoteById, onUpdateNote }) => {
+      const note = getNoteById(props.id);
+      return (
+        <Note
+          {...props}
+          {...note}
+          onUpdateNote={onUpdateNote}
+        />
+      );
+    }}
+  </NotesContext.Consumer>
+);
 
 class Note extends PureComponent {
   static propTypes = {
@@ -18,6 +34,8 @@ class Note extends PureComponent {
     color: PropTypes.string.isRequired,
   };
 
+  multiple = false;
+
   state = {
     editMode: false,
   };
@@ -27,6 +45,10 @@ class Note extends PureComponent {
   previousLeft = 0;
 
   previousTop = 0;
+
+  onKeyDown = (event) => {
+    this.multiple = event.shiftKey || event.metaKey;
+  }
 
   toogleEditMode = (event) => {
     event.stopPropagation();
@@ -119,10 +141,13 @@ class Note extends PureComponent {
 
     return (
       <div
+        tabIndex="0"
+        role="button"
         onPointerDown={this.onDown}
         onPointerMove={this.onMove}
         onPointerUp={this.onUp}
         onPointerCancel={this.onUp}
+        onKeyDown={this.onKeyDown}
       >
         <div className="Note" style={styles}>
           <div className={`select ${selected ? 'selected' : ''}`}>
@@ -143,4 +168,5 @@ class Note extends PureComponent {
   }
 }
 
-export default Note;
+export { Note };
+export default NoteWithContext;

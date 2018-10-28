@@ -1,8 +1,11 @@
 import React from 'react';
+import { NotesProvider } from './context';
 import Board from './components/Board';
 
 const App = () => (
-  <Board />
+  <NotesProvider>
+    <Board />
+  </NotesProvider>
 );
 
 export default App;

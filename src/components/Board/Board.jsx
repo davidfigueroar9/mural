@@ -1,91 +1,55 @@
-import React, { Component } from 'react';
-import cuid from 'cuid';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import NotesContext from '../../context';
 import Note from '../Note';
 import Header from '../Header';
 import './styles.css';
 
-class Board extends Component {
-  state = {
-    notes: [],
-  }
+
+const BoardWithContext = () => (
+  <NotesContext.Consumer>
+    {({
+      notesIds,
+      onAddNote,
+      unSelectAll,
+      onSelectedNote,
+      onCopy,
+      onPaste,
+    }) => (
+      <Board
+        notes={notesIds}
+        onAddNote={onAddNote}
+        unSelectAll={unSelectAll}
+        onSelectedNote={onSelectedNote}
+        onCopy={onCopy}
+        onPaste={onPaste}
+      />
+    )}
+  </NotesContext.Consumer>
+);
+
+
+class Board extends PureComponent {
+  static propTypes = {
+    notes: PropTypes.arrayOf(PropTypes.string).isRequired,
+    onAddNote: PropTypes.func.isRequired,
+    unSelectAll: PropTypes.func.isRequired,
+    onSelectedNote: PropTypes.func.isRequired,
+    onCopy: PropTypes.func.isRequired,
+    onPaste: PropTypes.func.isRequired,
+  };
 
   multiple = false;
 
   mousePosition = {};
 
-  clipboard = [];
-
-  onAddNote = (event) => {
-    const x = event.clientX;
-    const y = event.clientY;
-    const newNote = {
-      id: cuid(),
-      text: '',
-      selected: false,
-      color: '#FFFFFF',
-      position: {
-        x: x - 90,
-        y: y - 100,
-      },
-    };
-    this.setState(state => ({
-      notes: [
-        ...state.notes,
-        newNote,
-      ],
-    }));
-  }
-
-  onPasteNotes = () => {
-    const { x, y } = this.mousePosition;
-    const newNotes = this.clipboard.map(note => ({
-      ...note,
-      id: cuid(),
-      selected: false,
-      position: {
-        x: x - 90,
-        y: y - 100,
-      },
-    }));
-    this.setState(state => ({
-      notes: [
-        ...state.notes,
-        ...newNotes,
-      ],
-    }));
-  }
-
-  unSelectAll = () => {
-    const { notes } = this.state;
-    const newNotes = notes.map(note => ({ ...note, selected: false }));
-    this.setState({ notes: newNotes });
-  }
-
-  onSelectedNote = (id) => {
-    const { notes } = this.state;
-    const newNotes = notes.map(note => (
-      note.id === id
-        ? { ...note, selected: true }
-        : { ...note, selected: this.multiple ? note.selected : false }
-    ));
-    this.setState({ notes: newNotes });
-  }
-
-  onUpdateNote = (id, body) => {
-    const { notes } = this.state;
-    const newNotes = notes.map(note => (
-      note.id === id ? { ...note, ...body } : note
-    ));
-    this.setState({ notes: newNotes });
-  };
-
   onKeyDown = (event) => {
+    const { onPaste, onCopy } = this.props;
     this.multiple = event.shiftKey || event.metaKey;
     if ((event.ctrlKey && event.keyCode === 67) || (event.metaKey && event.keyCode === 67)) {
-      const { notes } = this.state;
-      this.clipboard = notes.filter(note => note.selected);
+      onCopy();
     } else if ((event.ctrlKey && event.keyCode === 86) || (event.metaKey && event.keyCode === 86)) {
-      this.onPasteNotes();
+      onPaste(this.mousePosition);
     }
   }
 
@@ -97,51 +61,16 @@ class Board extends Component {
     this.multiple = false;
   }
 
-  onDelete = () => {
-    const { notes } = this.state;
-    this.setState({ notes: notes.filter(note => !note.selected) });
-  }
-
-  onChangeColor = (color) => {
-    const { notes } = this.state;
-    const newNotes = notes.map(note => (
-      note.selected
-        ? { ...note, color }
-        : { ...note }
-    ));
-    this.setState({ notes: newNotes });
-  }
-
-  onOrder = () => {
-    const { notes } = this.state;
-    let notesSeleted = notes.filter(note => note.selected);
-    const notesUnSeleted = notes.filter(note => !note.selected);
-
-    notesSeleted = notesSeleted.map((note, index) => ({
-      ...note,
-      position: {
-        y: 50,
-        x: 10 + (180 * index),
-      },
-    }));
-
-    this.setState({ notes: [...notesUnSeleted, ...notesSeleted].sort((a, b) => a.id > b.id) });
+  onSelectedNote = (id) => {
+    const { onSelectedNote } = this.props;
+    onSelectedNote(id, this.multiple);
   }
 
   render() {
-    const { notes } = this.state;
+    const { onAddNote, notes, unSelectAll } = this.props;
 
     const renderNotes = notes.map(note => (
-      <Note
-        id={note.id}
-        text={note.text}
-        position={note.position}
-        key={note.id}
-        selected={note.selected}
-        onUpdateNote={this.onUpdateNote}
-        onSelectedNote={this.onSelectedNote}
-        color={note.color}
-      />
+      <Note key={note} id={note} onSelectedNote={this.onSelectedNote} />
     ));
 
     return (
@@ -151,20 +80,16 @@ class Board extends Component {
         onKeyUp={this.onKeyUp}
         role="button"
         className="Board"
-        onDoubleClick={this.onAddNote}
-        onClick={this.unSelectAll}
+        onDoubleClick={onAddNote}
+        onClick={unSelectAll}
         onMouseMove={this.onMouseMove}
       >
-        <Header
-          onDelete={this.onDelete}
-          onOrder={this.onOrder}
-          selected={notes.filter(note => note.selected).length}
-          onChangeColor={this.onChangeColor}
-        />
+        <Header />
         { renderNotes }
       </div>
     );
   }
 }
 
-export default Board;
+export { Board };
+export default BoardWithContext;
