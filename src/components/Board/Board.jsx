@@ -120,7 +120,7 @@ class Board extends Component {
     notesSeleted = notesSeleted.map((note, index) => ({
       ...note,
       position: {
-        y: 10,
+        y: 50,
         x: 10 + (180 * index),
       },
     }));

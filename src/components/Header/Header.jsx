@@ -2,6 +2,7 @@ import React, { Fragment, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ButtonHeader from '../ButtonHeader';
 import ColorPicker from '../ColorPicker';
+import Instructions from '../Instructions';
 import logo from '../../images/logo.svg';
 import './styles.css';
 
@@ -9,11 +10,20 @@ import './styles.css';
 class Header extends PureComponent {
   state = {
     openColorPicker: false,
+    openInstructions: false,
   }
 
   onToggleColorPicker = () => {
     this.setState(state => ({
       openColorPicker: !state.openColorPicker,
+      openInstructions: false,
+    }));
+  }
+
+  onToggleInstructions = () => {
+    this.setState(state => ({
+      openInstructions: !state.openInstructions,
+      openColorPicker: false,
     }));
   }
 
@@ -25,7 +35,7 @@ class Header extends PureComponent {
       onChangeColor,
     } = this.props;
 
-    const { openColorPicker } = this.state;
+    const { openColorPicker, openInstructions } = this.state;
 
     return (
       <header
@@ -39,16 +49,25 @@ class Header extends PureComponent {
           {
             selected !== 0 && (
               <Fragment>
+                <ButtonHeader icon="check_circle">
+                  { `${selected} selected` }
+                </ButtonHeader>
                 <ButtonHeader icon="dashboard" onClick={onOrder} />
                 <ButtonHeader icon="palette" onClick={this.onToggleColorPicker} />
                 <ButtonHeader icon="delete" onClick={onDelete} />
               </Fragment>
             )
           }
-          <ButtonHeader icon="help" onClick={() => {}} />
+          <ButtonHeader icon="info" onClick={this.onToggleInstructions} />
           {
             openColorPicker && selected !== 0 && (
               <ColorPicker onPick={onChangeColor} />
+            )
+          }
+
+          {
+            openInstructions && (
+              <Instructions />
             )
           }
         </div>

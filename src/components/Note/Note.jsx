@@ -12,7 +12,7 @@ class Note extends PureComponent {
     }).isRequired,
     text: PropTypes.string.isRequired,
     onUpdateNote: PropTypes.func.isRequired,
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     selected: PropTypes.bool.isRequired,
     onSelectedNote: PropTypes.func.isRequired,
     color: PropTypes.string.isRequired,

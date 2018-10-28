@@ -6,6 +6,7 @@
   position: absolute;
   top: 40px;
   right: 5px;
+  z-index: 1;
   border-radius: 3px;
   box-shadow: 0 8px 16px -4px rgba(9,45,66,.25), 0 0 0 1px rgba(9,45,66,.08);
 }

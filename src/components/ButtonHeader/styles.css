@@ -1,6 +1,5 @@
 .ButtonHeader {
-  height: 32px;
-  width: 32px;
+  padding: 7px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,4 +23,9 @@
 
 .ButtonHeader .material-icons {
   font-size: 20px;
+}
+
+.ButtonHeader p {
+  margin: 0 5px;
+  font-weight: bold;
 }

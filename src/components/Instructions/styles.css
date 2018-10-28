@@ -1,0 +1,43 @@
+.Instructions {
+  width: 350px;
+  overflow: auto;
+  background-color: white;
+  position: absolute;
+  top: 40px;
+  right: 5px;
+  border-radius: 3px;
+  z-index: 1;
+  box-shadow: 0 8px 16px -4px rgba(9,45,66,.25), 0 0 0 1px rgba(9,45,66,.08);
+}
+
+.Instructions Header {
+  color: #6b808c;
+  padding: 5px;
+  display: flex;
+  font-size: 14px;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.Instructions .content {
+  color: #6b808c;
+  padding: 15px;
+  font-size: 14px;
+}
+
+.Instructions .content p {
+  margin: 0;
+  margin-bottom: 15px;
+}
+
+.Instructions .content p:last-child {
+  margin-bottom: 0px;
+}
+
+.Instructions code {
+  padding: 3px 10px;
+  margin-left: 10px;
+  border-radius: 3px;
+  background-color: #ccc;
+}

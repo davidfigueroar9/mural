@@ -5,7 +5,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 4px 4px 4px 10px;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  padding: 4px;
   color: #FFF;
   user-select: none;
 }
@@ -16,7 +20,7 @@
 .Header .toolbar {
   display: flex;
   position: absolute;
-  right: 4px;
+  right: 10px;
 }
 .Header .btn {
   height: 32px;
