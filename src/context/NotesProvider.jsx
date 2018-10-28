@@ -11,7 +11,7 @@ class NotesProvider extends Component {
   };
 
   state = {
-    notes: this.props.notes,
+    notes: this.props.notes || emptyNotes,
   };
 
   clipboard = emptyNotes;
