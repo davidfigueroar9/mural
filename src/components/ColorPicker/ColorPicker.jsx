@@ -11,6 +11,7 @@ const ColorPicker = ({ onPick }) => (
       {
         colors.map(color => (
           <div
+            key={color}
             role="presentation"
             onClick={() => onPick(color)}
             className="color-item"

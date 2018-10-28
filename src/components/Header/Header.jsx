@@ -45,6 +45,7 @@ class Header extends PureComponent {
               </Fragment>
             )
           }
+          <ButtonHeader icon="help" onClick={() => {}} />
           {
             openColorPicker && selected !== 0 && (
               <ColorPicker onPick={onChangeColor} />

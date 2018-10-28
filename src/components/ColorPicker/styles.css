@@ -1,6 +1,6 @@
 .ColorPicker {
-  height: 300px;
-  width: 300px;
+  height: 230px;
+  width: 230px;
   overflow: auto;
   background-color: white;
   position: absolute;
@@ -14,16 +14,23 @@
   color: #6b808c;
   padding: 5px;
   display: flex;
+  font-size: 14px;
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid #f0f0f0;
 }
 
 .ColorPicker .color-item {
-  height: 25px;
-  width: 25px;
+  cursor: pointer;
+  height: 21px;
+  width: 21px;
   border-radius: 50px;
+  border: solid 2px rgba(0 , 0, 0, .05);
   margin: 3px;
+}
+
+.ColorPicker .color-item:hover {
+  border: solid 2px rgba(0 , 0, 0, .2);
 }
 
 .ColorPicker .content {

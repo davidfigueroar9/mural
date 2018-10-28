@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import cuid from 'cuid';
 import Note from '../Note';
 import Header from '../Header';
 import './styles.css';
@@ -17,9 +18,8 @@ class Board extends Component {
   onAddNote = (event) => {
     const x = event.clientX;
     const y = event.clientY;
-    const { notes } = this.state;
     const newNote = {
-      id: notes.length + 1,
+      id: cuid(),
       text: '',
       selected: false,
       color: '#FFFFFF',
@@ -38,10 +38,9 @@ class Board extends Component {
 
   onPasteNotes = () => {
     const { x, y } = this.mousePosition;
-    const { notes } = this.state;
-    const newNotes = this.clipboard.map((note, index) => ({
+    const newNotes = this.clipboard.map(note => ({
       ...note,
-      id: notes.length + 1 + index,
+      id: cuid(),
       selected: false,
       position: {
         x: x - 90,
@@ -115,19 +114,18 @@ class Board extends Component {
 
   onOrder = () => {
     const { notes } = this.state;
+    let notesSeleted = notes.filter(note => note.selected);
+    const notesUnSeleted = notes.filter(note => !note.selected);
 
-    this.setState({
-      notes: notes.map((note, index) => {
-        const position = {
-          y: note.selected ? 10 : note.position.y,
-          x: note.selected ? 10 + (180 * index) : note.position.x,
-        };
-        return ({
-          ...note,
-          position,
-        });
-      }),
-    });
+    notesSeleted = notesSeleted.map((note, index) => ({
+      ...note,
+      position: {
+        y: 10,
+        x: 10 + (180 * index),
+      },
+    }));
+
+    this.setState({ notes: [...notesUnSeleted, ...notesSeleted].sort((a, b) => a.id > b.id) });
   }
 
   render() {
