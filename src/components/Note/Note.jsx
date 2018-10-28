@@ -38,17 +38,12 @@ class Note extends PureComponent {
 
   state = {
     editMode: false,
+    isDragging: false,
   };
-
-  isDragging = false;
 
   previousLeft = 0;
 
   previousTop = 0;
-
-  onKeyDown = (event) => {
-    this.multiple = event.shiftKey || event.metaKey;
-  }
 
   toogleEditMode = (event) => {
     event.stopPropagation();
@@ -71,7 +66,7 @@ class Note extends PureComponent {
 
 
   onDown = (event) => {
-    this.isDragging = true;
+    this.setState({ isDragging: true });
     this.isClick = true;
     event.target.setPointerCapture(event.pointerId);
     this.extractPositionDelta(event);
@@ -79,12 +74,13 @@ class Note extends PureComponent {
 
 
   onUp = () => {
-    this.isDragging = false;
+    this.setState({ isDragging: false });
   };
 
 
   onMove = (event) => {
-    if (!this.isDragging) {
+    const { isDragging } = this.state;
+    if (!isDragging) {
       return;
     }
     const { position, onUpdateNote, id } = this.props;
@@ -117,11 +113,10 @@ class Note extends PureComponent {
       selected,
       color,
     } = this.props;
-    const { editMode } = this.state;
+    const { editMode, isDragging } = this.state;
 
     const styles = {
       transform: `translate(${position.x}px, ${position.y}px)`,
-      transition: !this.isDragging ? 'all .5s' : 'none',
     };
 
     const colorStyle = {
@@ -141,15 +136,14 @@ class Note extends PureComponent {
 
     return (
       <div
-        tabIndex="0"
-        role="button"
+        role="presentation"
         onPointerDown={this.onDown}
         onPointerMove={this.onMove}
         onPointerUp={this.onUp}
         onPointerCancel={this.onUp}
         onKeyDown={this.onKeyDown}
       >
-        <div className="Note" style={styles}>
+        <div className={`Note ${isDragging ? 'dragging' : ''}`} style={styles}>
           <div className={`select ${selected ? 'selected' : ''}`}>
             <div
               role="presentation"

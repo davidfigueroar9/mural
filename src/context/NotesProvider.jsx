@@ -11,7 +11,7 @@ class NotesProvider extends Component {
   };
 
   state = {
-    notes: emptyNotes,
+    notes: this.props.notes,
   };
 
   clipboard = emptyNotes;
@@ -19,6 +19,7 @@ class NotesProvider extends Component {
   onAddNote = (event) => {
     const x = event.clientX;
     const y = event.clientY;
+    const { notes } = this.state;
     const newNote = {
       id: cuid(),
       text: '',
@@ -29,12 +30,11 @@ class NotesProvider extends Component {
         y: y - 100,
       },
     };
-    this.setState(state => ({
-      notes: [
-        ...state.notes,
-        newNote,
-      ],
-    }));
+    const newNotes = [
+      ...notes,
+      newNote,
+    ];
+    this.setNotesState({ notes: newNotes });
   }
 
   onUpdateNote = (id, body) => {
@@ -42,7 +42,7 @@ class NotesProvider extends Component {
     const newNotes = notes.map(note => (
       note.id === id ? { ...note, ...body } : note
     ));
-    this.setState({ notes: newNotes });
+    this.setNotesState({ notes: newNotes });
   };
 
   getNoteById = (id) => {
@@ -53,7 +53,7 @@ class NotesProvider extends Component {
   unSelectAll = () => {
     const { notes } = this.state;
     const newNotes = notes.map(note => ({ ...note, selected: false }));
-    this.setState({ notes: newNotes });
+    this.setNotesState({ notes: newNotes });
   }
 
   onSelectedNote = (id, multiple) => {
@@ -63,7 +63,7 @@ class NotesProvider extends Component {
         ? { ...note, selected: true }
         : { ...note, selected: multiple ? note.selected : false }
     ));
-    this.setState({ notes: newNotes });
+    this.setNotesState({ notes: newNotes });
   }
 
   onChangeColor = (color) => {
@@ -73,12 +73,12 @@ class NotesProvider extends Component {
         ? { ...note, color }
         : { ...note }
     ));
-    this.setState({ notes: newNotes });
+    this.setNotesState({ notes: newNotes });
   }
 
   onDelete = () => {
     const { notes } = this.state;
-    this.setState({ notes: notes.filter(note => !note.selected) });
+    this.setNotesState({ notes: notes.filter(note => !note.selected) });
   }
 
   onOrder = () => {
@@ -93,7 +93,7 @@ class NotesProvider extends Component {
         x: 10 + (180 * index),
       },
     }));
-    this.setState({ notes: [...notesUnSeleted, ...notesSeleted].sort((a, b) => a.id > b.id) });
+    this.setNotesState({ notes: [...notesUnSeleted, ...notesSeleted] });
   }
 
   onCopy = () => {
@@ -119,14 +119,24 @@ class NotesProvider extends Component {
     }));
   }
 
+  setNotesState = (state) => {
+    this.setState(() => ({
+      ...state,
+    }), () => localStorage.setItem('muralInitialState', JSON.stringify(this.state)));
+  }
+
   render() {
     const { notes } = this.state;
     const { children } = this.props;
     const selected = notes.filter(n => n.selected).length;
+    const ids = notes.map(n => n.id).sort((a, b) => {
+      const value = a > b ? 1 : -1;
+      return (value);
+    });
     return (
       <NotesContext.Provider
         value={{
-          notesIds: notes.map(n => n.id),
+          notesIds: ids,
           getNoteById: this.getNoteById,
           onAddNote: this.onAddNote,
           onSelectedNote: this.onSelectedNote,
