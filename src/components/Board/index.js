@@ -1,3 +1,4 @@
-import Board from './Board';
+import BoardWithContext, { Board } from './Board';
 
-export default Board;
+export { Board };
+export default BoardWithContext;

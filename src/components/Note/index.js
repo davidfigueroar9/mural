@@ -1,3 +1,4 @@
-import Note from './Note';
+import NoteWithContext, { Note } from './Note';
 
-export default Note;
+export { Note };
+export default NoteWithContext;

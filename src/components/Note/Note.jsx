@@ -34,8 +34,6 @@ class Note extends PureComponent {
     color: PropTypes.string.isRequired,
   };
 
-  multiple = false;
-
   state = {
     editMode: false,
     isDragging: false,

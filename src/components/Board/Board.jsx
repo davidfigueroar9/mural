@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import NotesContext from '../../context';
-import Note from '../Note';
+import NoteWithContext from '../Note';
 import Header from '../Header';
 import './styles.css';
 
@@ -66,12 +66,15 @@ class Board extends PureComponent {
     onSelectedNote(id, this.multiple);
   }
 
-  render() {
-    const { onAddNote, notes, unSelectAll } = this.props;
-
-    const renderNotes = notes.map(note => (
-      <Note key={note} id={note} onSelectedNote={this.onSelectedNote} />
+  renderNotes = () => {
+    const { notes } = this.props;
+    return notes.map(note => (
+      <NoteWithContext key={note} id={note} onSelectedNote={this.onSelectedNote} />
     ));
+  }
+
+  render() {
+    const { onAddNote, unSelectAll } = this.props;
 
     return (
       <div
@@ -85,7 +88,7 @@ class Board extends PureComponent {
         onMouseMove={this.onMouseMove}
       >
         <Header />
-        { renderNotes }
+        {this.renderNotes()}
       </div>
     );
   }

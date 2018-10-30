@@ -1,6 +1,6 @@
 import React from 'react';
 import { NotesProvider } from './context';
-import Board from './components/Board';
+import MainBoard from './components/Board';
 
 const state = localStorage.getItem('muralInitialState')
   ? JSON.parse(localStorage.getItem('muralInitialState'))
@@ -8,7 +8,7 @@ const state = localStorage.getItem('muralInitialState')
 
 const App = () => (
   <NotesProvider notes={state.notes}>
-    <Board />
+    <MainBoard />
   </NotesProvider>
 );
 

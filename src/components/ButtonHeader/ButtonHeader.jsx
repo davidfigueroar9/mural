@@ -16,7 +16,7 @@ const ButtonHeader = ({ icon, onClick, children }) => (
 
 ButtonHeader.defaultProps = {
   children: '',
-  onClick: null,
+  onClick: () => {},
 };
 
 ButtonHeader.propTypes = {
