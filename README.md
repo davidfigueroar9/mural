@@ -1,4 +1,5 @@
 # Mural Notes
+[![Build Status](https://travis-ci.com/davidfigueroar9/mural.svg?branch=master)](https://travis-ci.com/davidfigueroar9/mural)
 
 A mini-mural app with sticky notes, which allows you to create notes, edit, delete and move them.
 
@@ -7,6 +8,12 @@ A mini-mural app with sticky notes, which allows you to create notes, edit, dele
 The demo is hosted in netlify service.
 
 [mural-notes](https://mural-notes.netlify.com/)
+
+<p align="center">
+    <img align="center" src="src/images/mural.gif" alt="React Mini Mural" width="700">
+</p>
+
+
 
 ### Installation
 
