@@ -161,4 +161,23 @@ describe('Board', () => {
     wrapper.find('div').simulate('mousemove', event);
     expect(wrapper.instance().mousePosition).toEqual({ x: event.pageX, y: event.pageY });
   });
+
+  it('should handle onSelectedNote correctly', () => {
+    const id = 'thisisid';
+
+    const wrapper = shallow(
+      <Board
+        notes={notesIds}
+        onAddNote={onAddNote}
+        unSelectAll={unSelectAll}
+        onSelectedNote={onSelectedNote}
+        onCopy={onCopy}
+        onPaste={onPaste}
+      />,
+    );
+    const instance = wrapper.instance();
+    expect(instance.multiple).toBe(false);
+    instance.onSelectedNote(id);
+    expect(onSelectedNote).toBeCalledWith(id, false);
+  });
 });

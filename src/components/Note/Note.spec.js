@@ -63,4 +63,69 @@ describe('Note', () => {
     wrapper.find('.content').first().simulate('doubleclick', event);
     expect(wrapper.instance().state.editMode).toBe(true);
   });
+
+
+  it('should call the correct function extractPositionDelta', () => {
+    const event = {
+      pageX: 10,
+      pageY: 10,
+    };
+    const props = {
+      id: 'id1',
+      text: 'some cool note',
+      selected: false,
+      color: '#FFFFFF',
+      position: {
+        x: 100,
+        y: 100,
+      },
+    };
+    const wrapper = shallow(
+      <Note
+        {...props}
+        onUpdateNote={onUpdateNote}
+        onSelectedNote={onSelectedNote}
+      />,
+    );
+
+    const instance = wrapper.instance();
+    expect(instance.previousLeft).toBe(0);
+    expect(instance.previousTop).toBe(0);
+    instance.extractPositionDelta(event);
+    expect(instance.previousLeft).toBe(event.pageX);
+    expect(instance.previousTop).toBe(event.pageY);
+  });
+
+  it('should call the correct function Moving', () => {
+    const event = {
+      pageX: 10,
+      pageY: 10,
+    };
+    const props = {
+      id: 'id1',
+      text: 'some cool note',
+      selected: false,
+      color: '#FFFFFF',
+      position: {
+        x: 100,
+        y: 100,
+      },
+    };
+    const wrapper = shallow(
+      <Note
+        {...props}
+        onUpdateNote={onUpdateNote}
+        onSelectedNote={onSelectedNote}
+      />,
+    );
+
+    const instance = wrapper.instance();
+    instance.state.isDragging = true;
+    expect(instance.previousLeft).toBe(0);
+    expect(instance.previousTop).toBe(0);
+    instance.onMove(event);
+    expect(onUpdateNote).toBeCalled();
+    expect(instance.previousLeft).toBe(event.pageX);
+    expect(instance.previousTop).toBe(event.pageY);
+  });
 });
