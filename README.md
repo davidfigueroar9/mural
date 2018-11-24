@@ -1,5 +1,5 @@
 # Mural Notes
-[![Build Status](https://travis-ci.com/davidfigueroar9/mural.svg?branch=master)](https://travis-ci.com/davidfigueroar9/mural)
+[![Build Status](https://travis-ci.com/davidfigueroar9/mural.svg?branch=master)](https://travis-ci.com/davidfigueroar9/mural) [![Coverage Status](https://coveralls.io/repos/github/davidfigueroar9/mural/badge.svg?branch=master)](https://coveralls.io/github/davidfigueroar9/mural?branch=master) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/davidfigueroar9/mural/blob/master/LICENSE)
 
 A mini-mural app with sticky notes, which allows you to create notes, edit, delete and move them.
 
