@@ -1,5 +1,9 @@
 language: node_js
 node_js:
   - "8"
+
+before_script:
+  - echo -e  repo_token:"$REPO_TOKEN" > .coveralls.yml
+
 script:
-  - yarn run test --coverage
+  - yarn run test --coverage --coverageReporters=text-lcov | coveralls
